@@ -4,6 +4,7 @@ const container1 = document.querySelector("#container1");
 const container2 = document.querySelector("#container2");
 const sumBtn = document.querySelector("#sumBtn");
 const resultContainer = document.querySelector("#result-container");
+const operation = document.querySelector("#operation");
 
 myForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -13,7 +14,7 @@ myForm.addEventListener("submit", (e) => {
   resultContainer.innerHTML = ''; 
 
   const matrixSize = Number(rows.value);
-  
+
   container1.innerHTML = '<div class="matrix-label" style="margin-top:15px">Matrix 1</div>';
 
   container2.innerHTML = '<div class="matrix-label" style="margin-top:15px">Matrix 2</div>';
@@ -35,13 +36,23 @@ const calculateMatrixValues = () => {
   
   resultContainer.innerHTML = ''; 
 
+  resultContainer.innerHTML = '<div class="matrix-label" style="margin-top:15px">Result</div>';
+
+  const selectedOperation = operation.value;
+
   for (let i = 0; i < matrixSize; i++) {
     for (let j = 0; j < matrixSize; j++) {
       const input1 = document.querySelector(`#input1_${i}_${j}`);
       const input2 = document.querySelector(`#input2_${i}_${j}`);
-      resultContainer.innerHTML += `<input type="number" value="${
-        +input1.value + +input2.value
-      }" disabled style="width:40px;">`;
+      
+      let result;
+      if (selectedOperation === 'add') {
+        result = +input1.value + +input2.value;
+      } else if (selectedOperation === 'subtract') {
+        result = +input1.value - +input2.value;
+      }
+      
+      resultContainer.innerHTML += `<input type="number" value="${result}" disabled style="width:40px;">`;
     }
     resultContainer.innerHTML += `<br/>`;
   }
